@@ -1,0 +1,90 @@
+{
+  "name": "wp-plugin-test",
+  "version": "1.0.0",
+  "description": "Wang Jin Che Working",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode=production",
+    "watch": "webpack --watch",
+    "lint:php": "cross-env ./vendor/bin/phpcs",
+    "lint:php:fix": "cross-env ./vendor/bin/phpcbf",
+    "lint:scripts": "cross-env eslint 'assets/**/*.js'",
+    "lint:scripts:fix": "cross-env eslint 'assets/**/*.js' --fix",
+    "lint:scss": "cross-env stylelint 'assets/**/*.scss'",
+    "lint:scss:fix": "cross-env stylelint 'assets/**/*.scss' --fix"
+  },
+  "author": "Wang Jin Che",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/plugin-transform-runtime": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/runtime": "^7.10.5",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
+    "cross-env": "^7.0.2",
+    "css-loader": "^3.6.0",
+    "eslint": "^7.4.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-wordpress": "^2.0.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-prettier": "^3.1.4",
+    "mini-css-extract-plugin": "^0.9.0",
+    "normalize.css": "^8.0.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "postcss-loader": "^3.0.0",
+    "prettier": "npm:wp-prettier@^2.0.5",
+    "sass": "^1.26.10",
+    "sass-loader": "^9.0.2",
+    "stylelint": "^13.6.1",
+    "stylelint-config-wordpress": "^17.0.0",
+    "stylelint-scss": "^3.18.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": [
+      "wordpress",
+      "prettier"
+    ],
+    "rules": {
+      "import/no-webpack-loader-syntax": 0,
+      "no-console": "warn",
+      "prettier/prettier": "error"
+    },
+    "plugins": [
+      "prettier"
+    ]
+  },
+  "eslintIgnore": [
+    "dist/**",
+    "vendor/**"
+  ],
+  "stylelint": {
+    "extends": [
+      "stylelint-config-wordpress/scss"
+    ],
+    "plugins": [
+      "stylelint-scss"
+    ],
+    "rules": {
+      "indentation": 2,
+      "string-quotes": "single",
+      "at-rule-no-unknown": null,
+      "scss/at-rule-no-unknown": true,
+      "selector-class-pattern": null,
+      "max-nesting-depth": null,
+      "selector-max-compound-selectors": 5
+    },
+    "ignoreFiles": [
+      "dist/**",
+      "vendor/**"
+    ]
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie 10"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-4": {
+            "WangApp\\": "src/"
+        }
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.4"
+    }
+}

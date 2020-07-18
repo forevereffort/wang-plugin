@@ -1,0 +1,15 @@
+{
+    "parser": "babel-eslint",
+    "extends": [
+      "wordpress",
+      "prettier"
+    ],
+    "rules": {
+      "import/no-webpack-loader-syntax": 0,
+      "no-console": "warn",
+      "prettier/prettier": "error"
+    },
+    "plugins": [
+      "prettier"
+    ]
+}
