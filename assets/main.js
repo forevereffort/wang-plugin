@@ -1,53 +1,70 @@
-// import "normalize.css/normalize.css";
 import "./main.scss";
 
-const a = (x, y) => x + y;
-const b = a(1, 2);
+jQuery(document).ready(() => {
+  if (0 < jQuery(".wjc-data-table").length) {
+    jQuery(".wjc-data-table").each((key, tableElem) => {
+      const nonce = jQuery(tableElem).attr("data-nonce");
 
-alert(b);
-alert("this is a book");
+      jQuery.ajax({
+        type: "post",
+        dataType: "json",
+        url: wjcWpAjax.ajax_url,
+        data: {
+          action: "wjc_ajax_func",
+          nonce: nonce,
+        },
+        success: (res) => {
+          renderTable(tableElem, res);
+        },
+      });
+    });
+  }
 
-// Bad
-const html =
-  "<p>The sum of " +
-  a +
-  " and " +
-  b +
-  " plus " +
-  c +
-  " is " +
-  (a + b + c) +
-  "</p>";
+  function renderTable(tableElem, res) {
+    let tableHtml = "";
 
-let aa = elements
-  .addClass("foo")
-  .children()
-  .html("hello")
-  .end()
-  .appendTo("body");
+    tableHtml += "<table>";
+    tableHtml += `<caption>${res.title}</caption>`;
 
-foo(
-  reallyLongArg(),
-  omgSoManyParameters(),
-  IShouldRefactorThis(),
-  isThereSeriouslyAnotherOne()
-);
+    tableHtml += "<thead><tr>";
 
-a(x1, x2, x3, x4, x5);
+    jQuery.each(res.data.headers, (key, val) => {
+      tableHtml += `<th>${val}</th>`;
+    });
 
-const obj = {
-  ready: 9,
-  when: 4,
-  "you are": 15,
-  "you are": 15,
-  "you are": 15,
-  "you are": 15,
-  "you are": 15,
-  "you are": 15,
-};
+    tableHtml += "</tr></thead>";
 
-let foo = true;
-let bar = false;
-let a1;
-let b2;
-let c3;
+    tableHtml += "<tbody>";
+    jQuery.each(res.data.rows, (rowKey, row) => {
+      let dateCel = new Date(row.date * 1000);
+      let dateVal =
+        dateCel.getMonth() +
+        1 +
+        "/" +
+        dateCel.getDate() +
+        "/" +
+        dateCel.getFullYear() +
+        " " +
+        dateCel.getHours() +
+        ":" +
+        dateCel.getMinutes() +
+        ":" +
+        dateCel.getSeconds();
+
+      tableHtml += `
+        <tr>
+          <td>${row.id}</td>
+          <td>${row.fname}</td>
+          <td>${row.lname}</td>
+          <td>${row.email}</td>
+          <td>${dateVal}</td>
+        </tr>
+      `;
+    });
+    tableHtml += "</tbody>";
+
+    tableHtml += "</table>";
+
+    jQuery(tableElem).html(tableHtml);
+  }
+});

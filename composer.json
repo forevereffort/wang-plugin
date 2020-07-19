@@ -1,7 +1,8 @@
 {
+    "description": "Wang Jin Che Working",
     "autoload": {
         "psr-4": {
-            "WangApp\\": "src/"
+            "WJCPlugin\\": "src/"
         }
     },
     "require-dev": {

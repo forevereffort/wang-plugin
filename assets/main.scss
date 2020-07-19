@@ -1,13 +1,7 @@
-@import 'styles/a';
+.wjc-data-table {
 
-#selector-1 {
-  background: #fff;
-  margin: 0;
-  margin-left: 20px;
-  display: flex;
-  color: #fff;
-  width: 1px;
-  transition: all 0.2s;
-
-  content: 'a';
+  td,
+  th {
+    font-size: 12px;
+  }
 }
