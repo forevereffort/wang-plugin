@@ -11,7 +11,7 @@ if (! class_exists('WJC_API')) :
     class WJC_API
     {
         var $api_url = 'https://miusage.com/v1/challenge/1/';
-        var $expire_time = 10; //3600; // 1 hr
+        var $expire_time = 3600; // 1 hr
         var $api_call_time_option_key = 'wjc_api_call_time';
         var $api_option_key = 'wjc_api_data';
 
