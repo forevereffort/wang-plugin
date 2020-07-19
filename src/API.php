@@ -61,9 +61,9 @@ if (! class_exists('WJC_API')) :
             return $this->getData(true);
         }
         
-        public function getData($force = false)
+        public function getData($forceRemote = false)
         {
-            if ($this->checkExpire() || $force) {
+            if ($this->checkExpire() || $forceRemote) {
                 $res = wp_remote_get($this->api_url);
                 update_option($this->api_option_key, wp_remote_retrieve_body($res));
             }
