@@ -52,6 +52,15 @@ if (! class_exists('WJC_API')) :
             return false;
         }
 
+        public function bustCache()
+        {
+            $current_time = current_time('timestamp');
+    
+            update_option($this->api_call_time_option_key, $current_time);
+
+            $this->getData(true);
+        }
+
         public function bustData()
         {
             $current_time = current_time('timestamp');

@@ -9,11 +9,9 @@ Author URI: http://AUTHOR_URI.com
 Version: 1.0.0
 Text Domain: wjc
 */
-
-namespace WJCPlugin;
-
 use WJCPlugin\WJC_API;
 use WJCPlugin\WJC_Admin;
+use WJCPlugin\WJC_CLI;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -43,9 +41,6 @@ if (! class_exists('WJC')) :
         function __construct()
         {
             // Do nothing.
-
-            // $wjc_api = new WJC_API();
-            // echo $wjc_api->getData();
         }
     
         /**
@@ -94,6 +89,9 @@ if (! class_exists('WJC')) :
 
             // Add shortcodes
             add_shortcode('wjc', [$this, 'wjc_shortcode_func']);
+
+            // Bust Cache WP-CLI
+            $wjc_cli = new WJC_CLI();
         }
     
         /**
