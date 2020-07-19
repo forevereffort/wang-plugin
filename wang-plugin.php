@@ -13,6 +13,7 @@ Text Domain: wjc
 namespace WJCPlugin;
 
 use WJCPlugin\WJC_API;
+use WJCPlugin\WJC_Admin;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -21,6 +22,7 @@ if (! defined('ABSPATH')) {
 }
 
 if (! class_exists('WJC')) :
+
     class WJC
     {
 
@@ -43,7 +45,6 @@ if (! class_exists('WJC')) :
             // Do nothing.
 
             // $wjc_api = new WJC_API();
-        
             // echo $wjc_api->getData();
         }
     
@@ -77,6 +78,13 @@ if (! class_exists('WJC')) :
                 'file'                      => __FILE__,
                 'url'                       => plugin_dir_url(__FILE__),
             );
+
+            // admin
+            if (is_admin()) {
+                $wjc_admin = new WJC_Admin();
+
+                add_action('admin_enqueue_scripts', array( $this, 'wjc_scripts'));
+            }
         
             // Add actions.
             add_action('wp_enqueue_scripts', array( $this, 'wjc_scripts'));
@@ -109,7 +117,7 @@ if (! class_exists('WJC')) :
 
         function wjc_shortcode_func()
         {
-            return '<div class="wjc-data-table" data-nonce="' . wp_create_nonce("wjc_ajax_nonce") . '"></div>';
+            return '<div class="wjc-data-table" data-nonce="' . wp_create_nonce("wjc_ajax_nonce") . '"></div><div class="wjc-ajax-mask hide"></div>';
         }
 
         function wjc_ajax_func()

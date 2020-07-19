@@ -5,6 +5,8 @@ jQuery(document).ready(() => {
     jQuery(".wjc-data-table").each((key, tableElem) => {
       const nonce = jQuery(tableElem).attr("data-nonce");
 
+      jQuery(".wjc-ajax-mask").removeClass("hide");
+
       jQuery.ajax({
         type: "post",
         dataType: "json",
@@ -15,10 +17,34 @@ jQuery(document).ready(() => {
         },
         success: (res) => {
           renderTable(tableElem, res);
+
+          jQuery(".wjc-ajax-mask").addClass("hide");
         },
       });
     });
   }
+
+  jQuery("#wjc-refresh-button").click(function () {
+    const nonce = jQuery(this).attr("data-nonce");
+    jQuery(".wjc-ajax-mask").removeClass("hide");
+
+    jQuery.ajax({
+      type: "post",
+      dataType: "json",
+      url: wjcWpAjax.ajax_url,
+      data: {
+        action: "wjc_refresh_ajax_func",
+        nonce: nonce,
+      },
+      success: (res) => {
+        jQuery(".wjc-data-table").each((key, tableElem) => {
+          renderTable(tableElem, res);
+        });
+
+        jQuery(".wjc-ajax-mask").addClass("hide");
+      },
+    });
+  });
 
   function renderTable(tableElem, res) {
     let tableHtml = "";
