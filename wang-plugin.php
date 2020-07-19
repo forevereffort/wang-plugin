@@ -41,6 +41,10 @@ if (! class_exists('WJC')) :
         function __construct()
         {
             // Do nothing.
+
+            // $wjc_api = new WJC_API();
+        
+            // echo $wjc_api->getData();
         }
     
         /**
@@ -75,10 +79,10 @@ if (! class_exists('WJC')) :
             );
         
             // Add actions.
-            add_action( 'wp_enqueue_scripts', array( $this, 'wjc_scripts') );
+            add_action('wp_enqueue_scripts', array( $this, 'wjc_scripts'));
 
-            add_action( 'wp_ajax_wjc_ajax_func', array( $this, 'wjc_ajax_func' ) );
-            add_action( 'wp_ajax_nopriv_wjc_ajax_func', array( $this, 'wjc_ajax_func' ) );
+            add_action('wp_ajax_wjc_ajax_func', array( $this, 'wjc_ajax_func' ));
+            add_action('wp_ajax_nopriv_wjc_ajax_func', array( $this, 'wjc_ajax_func' ));
 
             // Add shortcodes
             add_shortcode('wjc', [$this, 'wjc_shortcode_func']);
@@ -108,8 +112,9 @@ if (! class_exists('WJC')) :
             return '<div class="wjc-data-table" data-nonce="' . wp_create_nonce("wjc_ajax_nonce") . '"></div>';
         }
 
-        function wjc_ajax_func(){
-            if ( !wp_verify_nonce( $_REQUEST['nonce'], "wjc_ajax_nonce")) {
+        function wjc_ajax_func()
+        {
+            if (!wp_verify_nonce($_REQUEST['nonce'], "wjc_ajax_nonce")) {
                 exit("No naughty business please");
             }
     
@@ -122,9 +127,10 @@ if (! class_exists('WJC')) :
             die();
         }
 
-        function wjc_scripts(){
-            wp_enqueue_script('wjc-js', $this->settings['url']  . 'dist/assets/main.js' , array('jquery'), $this->version, true);
-            wp_localize_script( 'wjc-js', 'wjcWpAjax', array( 'ajax_url' => admin_url( 'admin-ajax.php' )));
+        function wjc_scripts()
+        {
+            wp_enqueue_script('wjc-js', $this->settings['url']  . 'dist/assets/main.js', array('jquery'), $this->version, true);
+            wp_localize_script('wjc-js', 'wjcWpAjax', array( 'ajax_url' => admin_url('admin-ajax.php')));
 
             wp_enqueue_style('wjc-css', $this->settings['url']  . 'dist/assets/main.css', array(), $this->version, 'all');
         }
