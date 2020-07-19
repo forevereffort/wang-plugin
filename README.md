@@ -10,3 +10,4 @@ npm run lint:scss:fix
 npm run build
 npm run watch
 ```
+4. please add this shortcode [wjc]
