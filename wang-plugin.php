@@ -9,13 +9,17 @@ Author URI: http://AUTHOR_URI.com
 Version: 1.0.0
 Text Domain: wjc
 */
-
-use WJCPlugin\WJC_API;
-use WJCPlugin\WJC_Admin;
-
 if (! defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
+
+spl_autoload_register(function( $class_name ) {
+    if( $class_name === 'WJCPlugin\WJC_Admin' ){
+        require plugin_dir_path(__FILE__) . 'src/Admin.php';
+    } else if( $class_name === 'WJCPlugin\WJC_API' ){
+        require plugin_dir_path(__FILE__) . 'src/API.php';
+    }
+});
 
 if (! class_exists('WJC')) :
 
@@ -74,7 +78,7 @@ if (! class_exists('WJC')) :
 
             // admin
             if (is_admin()) {
-                $wjc_admin = new WJC_Admin();
+                $wjc_admin = new WJCPlugin\WJC_Admin();
             }
         
             // Add actions.
@@ -117,7 +121,7 @@ if (! class_exists('WJC')) :
                 exit("No naughty business please");
             }
     
-            $wjc_api = new WJC_API();
+            $wjc_api = new WJCPlugin\WJC_API();
         
             $data = $wjc_api->get_data();
             
