@@ -120,7 +120,7 @@ if (! class_exists('WJC')) :
     
             $wjc_api = new WJC_API();
         
-            $data = $wjc_api->get_data(true);
+            $data = $wjc_api->get_data();
             
             echo $wjc_api->render_table($data);
         

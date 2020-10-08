@@ -11,7 +11,7 @@ if (! class_exists('WJC_API')) :
     class WJC_API
     {
         var $api_url = 'https://dummy.restapiexample.com/api/v1/employees/';
-        var $expire_time = 3600; // 1 hr
+        var $expire_time = 43200; // 12 hr
         var $api_call_time_option_key = 'wjc_api_call_time';
         var $api_option_key = 'wjc_api_data';
 
@@ -86,6 +86,7 @@ if (! class_exists('WJC_API')) :
                         if ( is_array( $result ) && ! is_wp_error( $result ) ) {
                             if( $result['status'] == 'success' ){
                                 // everything is okay. we can trust this result.
+                                // echo 'fetched';
                                 update_option($this->api_option_key, $result['data']);
                             } else {
                                 // echo 'API internal error !!!';
