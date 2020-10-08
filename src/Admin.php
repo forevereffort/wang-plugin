@@ -59,7 +59,7 @@ if (! class_exists('WJC_Admin')) :
 
         function the_form_response()
         {
-            if( isset( $_POST['nds_add_user_meta_nonce'] ) && wp_verify_nonce( $_POST['nds_add_user_meta_nonce'], 'nds_add_user_meta_form_nonce') ) {        
+            if( isset( $_POST['nds_prune_cache_nonce'] ) && wp_verify_nonce( $_POST['nds_prune_cache_nonce'], 'nds_prune_cache_form_nonce') ) {        
                 // redirect the user to the appropriate page
                 $wjc_api = new WJC_API();
                 $wjc_api->prune_cache(true);
@@ -83,7 +83,7 @@ if (! class_exists('WJC_Admin')) :
             $data = $wjc_api->get_data();
 
             // Generate a custom nonce value.
-            $nds_add_meta_nonce = wp_create_nonce( 'nds_add_user_meta_form_nonce' );
+            $nds_add_meta_nonce = wp_create_nonce( 'nds_prune_cache_form_nonce' );
             ?>
             <div class="wrap">
                 <h1>Wang Jin Che Table</h1>
@@ -102,7 +102,7 @@ if (! class_exists('WJC_Admin')) :
                 <?php echo $wjc_api->render_table($data); ?>
                 <form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post">
                     <input type="hidden" name="action" value="nds_form_response">
-                    <input type="hidden" name="nds_add_user_meta_nonce" value="<?php echo $nds_add_meta_nonce ?>" />
+                    <input type="hidden" name="nds_prune_cache_nonce" value="<?php echo $nds_add_meta_nonce ?>" />
                     <p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="Prune Cache"></p>
                 </form>
             </div>
