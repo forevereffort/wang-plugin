@@ -11,7 +11,6 @@ Text Domain: wjc
 */
 use WJCPlugin\WJC_API;
 use WJCPlugin\WJC_Admin;
-use WJCPlugin\WJC_CLI;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -77,8 +76,6 @@ if (! class_exists('WJC')) :
             // admin
             if (is_admin()) {
                 $wjc_admin = new WJC_Admin();
-
-                add_action('admin_enqueue_scripts', array( $this, 'wjc_scripts'));
             }
         
             // Add actions.
@@ -89,9 +86,6 @@ if (! class_exists('WJC')) :
 
             // Add shortcodes
             add_shortcode('wjc', [$this, 'wjc_shortcode_func']);
-
-            // Bust Cache WP-CLI
-            $wjc_cli = new WJC_CLI();
         }
     
         /**
@@ -126,9 +120,9 @@ if (! class_exists('WJC')) :
     
             $wjc_api = new WJC_API();
         
-            $result = $wjc_api->getData();
+            $data = $wjc_api->get_data(true);
             
-            echo $result;
+            echo $wjc_api->render_table($data);
         
             die();
         }

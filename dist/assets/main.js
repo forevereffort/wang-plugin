@@ -1,1 +1,112 @@
-!function(t){var e={};function a(n){if(e[n])return e[n].exports;var r=e[n]={i:n,l:!1,exports:{}};return t[n].call(r.exports,r,r.exports,a),r.l=!0,r.exports}a.m=t,a.c=e,a.d=function(t,e,n){a.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:n})},a.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},a.t=function(t,e){if(1&e&&(t=a(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var n=Object.create(null);if(a.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var r in t)a.d(n,r,function(e){return t[e]}.bind(null,r));return n},a.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return a.d(e,"a",e),e},a.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},a.p="",a(a.s=0)}([function(t,e,a){"use strict";a.r(e);a(1);jQuery(document).ready((function(){function t(t,e){var a="";a+="<table>",a+="<caption>".concat(e.title,"</caption>"),a+="<thead><tr>",jQuery.each(e.data.headers,(function(t,e){a+="<th>".concat(e,"</th>")})),a+="</tr></thead>",a+="<tbody>",jQuery.each(e.data.rows,(function(t,e){var n=new Date(1e3*e.date),r=n.getMonth()+1+"/"+n.getDate()+"/"+n.getFullYear()+" "+n.getHours()+":"+n.getMinutes()+":"+n.getSeconds();a+="\n        <tr>\n          <td>".concat(e.id,"</td>\n          <td>").concat(e.fname,"</td>\n          <td>").concat(e.lname,"</td>\n          <td>").concat(e.email,"</td>\n          <td>").concat(r,"</td>\n        </tr>\n      ")})),a+="</tbody>",a+="</table>",jQuery(t).html(a)}0<jQuery(".wjc-data-table").length&&jQuery(".wjc-data-table").each((function(e,a){var n=jQuery(a).attr("data-nonce");jQuery(".wjc-ajax-mask").removeClass("hide"),jQuery.ajax({type:"post",dataType:"json",url:wjcWpAjax.ajax_url,data:{action:"wjc_ajax_func",nonce:n},success:function(e){t(a,e),jQuery(".wjc-ajax-mask").addClass("hide")}})})),jQuery("#wjc-refresh-button").click((function(){var e=jQuery(this).attr("data-nonce");jQuery(".wjc-ajax-mask").removeClass("hide"),jQuery.ajax({type:"post",dataType:"json",url:wjcWpAjax.ajax_url,data:{action:"wjc_refresh_ajax_func",nonce:e},success:function(e){jQuery(".wjc-data-table").each((function(a,n){t(n,e)})),jQuery(".wjc-ajax-mask").addClass("hide")}})}))}))},function(t,e,a){}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./assets/main.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./assets/main.js":
+/*!************************!*\
+  !*** ./assets/main.js ***!
+  \************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _main_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main.scss */ \"./assets/main.scss\");\n/* harmony import */ var _main_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_main_scss__WEBPACK_IMPORTED_MODULE_0__);\n\njQuery(document).ready(function () {\n  if (0 < jQuery(\".wjc-data-table\").length) {\n    jQuery(\".wjc-data-table\").each(function (key, tableElem) {\n      var nonce = jQuery(tableElem).attr(\"data-nonce\");\n      jQuery(\".wjc-ajax-mask\").removeClass(\"hide\");\n      jQuery.ajax({\n        type: \"post\",\n        dataType: \"text\",\n        url: wjcWpAjax.ajax_url,\n        data: {\n          action: \"wjc_ajax_func\",\n          nonce: nonce\n        },\n        success: function success(res) {\n          jQuery(tableElem).html(res);\n          jQuery(\".wjc-ajax-mask\").addClass(\"hide\");\n        }\n      });\n    });\n  }\n});\n\n//# sourceURL=webpack:///./assets/main.js?");
+
+/***/ }),
+
+/***/ "./assets/main.scss":
+/*!**************************!*\
+  !*** ./assets/main.scss ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./assets/main.scss?");
+
+/***/ })
+
+/******/ });

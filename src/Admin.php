@@ -27,10 +27,8 @@ if (! class_exists('WJC_Admin')) :
 
         public function __construct()
         {
-            add_action('admin_menu', array($this, 'admin_menu'));
-
-            add_action('wp_ajax_wjc_refresh_ajax_func', array( $this, 'wjc_refresh_ajax_func' ));
-            add_action('wp_ajax_nopriv_wjc_refresh_ajax_func', array( $this, 'wjc_refresh_ajax_func' ));
+            add_action('admin_menu', [$this, 'admin_menu']);
+            add_action( 'admin_post_nds_form_response', [$this, 'the_form_response']);
         }
 
         /*
@@ -47,47 +45,68 @@ if (! class_exists('WJC_Admin')) :
         */
         
         function admin_menu()
-        {
-            // vars
-            $parent_slug = 'wjc-table';
-            $cap = 'manage_options';
-            
-            
-            // add parent
-            add_menu_page(
+        {            
+            add_submenu_page(
+                'tools.php',
                 __("Wang Jin Che Table", 'wjc'),
                 __("Wang Jin Che Table", 'wjc'),
-                $cap,
-                $parent_slug,
+                'manage_options',
+                'wjc-table',
                 array( $this, 'create_admin_page' ),
-                'dashicons-admin-site'
             );
+        }
+
+
+        function the_form_response()
+        {
+            if( isset( $_POST['nds_add_user_meta_nonce'] ) && wp_verify_nonce( $_POST['nds_add_user_meta_nonce'], 'nds_add_user_meta_form_nonce') ) {        
+                // redirect the user to the appropriate page
+                $wjc_api = new WJC_API();
+                $wjc_api->prune_cache(true);
+
+                wp_redirect(add_query_arg('fetch', 'done', $_SERVER['HTTP_REFERER']));
+                exit();
+            } else {
+                wp_die(
+                    __( 'Invalid nonce specified', 'wjc'),
+                    __( 'Error', 'wjc'),
+                    [
+                        'response' 	=> 403,
+                    ]
+                );
+            }
         }
 
         function create_admin_page()
         {
+            $wjc_api = new WJC_API();        
+            $data = $wjc_api->get_data();
+
+            // Generate a custom nonce value.
+            $nds_add_meta_nonce = wp_create_nonce( 'nds_add_user_meta_form_nonce' );
             ?>
             <div class="wrap">
                 <h1>Wang Jin Che Table</h1>
-                <div class="wjc-data-table" data-nonce="<?php echo wp_create_nonce("wjc_ajax_nonce"); ?>"></div>
-                <input id="wjc-refresh-button" class="button button-primary" type="button" value="Refresh" data-nonce="<?php echo wp_create_nonce("wjc_refresh_ajax_nonce"); ?>" />
-                <div class="wjc-ajax-mask hide"></div>
+                <?php
+                    if( isset($_GET['fetch']) && $_GET['fetch'] === 'done' ){
+                ?>
+                <div class="notice notice-success is-dismissible"> 
+                    <p><strong>Pruned cache and fetched fresh data</strong></p>
+                    <button type="button" class="notice-dismiss">
+                        <span class="screen-reader-text">Dismiss this notice.</span>
+                    </button>
+                </div>
+                <?php
+                    }
+                ?>
+                <?php echo $wjc_api->render_table($data); ?>
+                <form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post">
+                    <input type="hidden" name="action" value="nds_form_response">
+                    <input type="hidden" name="nds_add_user_meta_nonce" value="<?php echo $nds_add_meta_nonce ?>" />
+                    <p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="Prune Cache"></p>
+                </form>
             </div>
             <?php
-        }
-
-        function wjc_refresh_ajax_func()
-        {
-            if (!wp_verify_nonce($_REQUEST['nonce'], "wjc_refresh_ajax_nonce")) {
-                exit("No naughty business please");
-            }
-    
-            $wjc_api = new WJC_API();
-            $result = $wjc_api->bustData();
-            
-            echo $result;
-        
-            die();
         }
     }
 
