@@ -9,10 +9,9 @@ Author URI: http://AUTHOR_URI.com
 Version: 1.0.0
 Text Domain: wjc
 */
+
 use WJCPlugin\WJC_API;
 use WJCPlugin\WJC_Admin;
-
-require_once __DIR__ . '/vendor/autoload.php';
 
 if (! defined('ABSPATH')) {
     exit; // Exit if accessed directly

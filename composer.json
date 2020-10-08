@@ -1,10 +1,5 @@
 {
     "description": "Wang Jin Che Working",
-    "autoload": {
-        "psr-4": {
-            "WJCPlugin\\": "src/"
-        }
-    },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.4"
     }
